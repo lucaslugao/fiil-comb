@@ -20,7 +20,7 @@ class AbstractRule(ABC):
         pass
 
     @abstractmethod
-    def _bound(self, min, max):
+    def _bound_count(self, min, max):
         pass
 
     @abstractmethod
@@ -40,8 +40,8 @@ class AbstractRule(ABC):
         return self._count(i)
 
     @functools.lru_cache(maxsize=None)
-    def bound(self, min, max):
-        return self._bound(min, max)
+    def bound_count(self, min, max):
+        return self._bound_count(min, max)
 
     @functools.lru_cache(maxsize=None)
     def list(self, n):
@@ -100,7 +100,7 @@ class SingletonRule(ConstantRule):
     def _count(self, i):
         return 1 if i == 1 else 0
 
-    def _bound(self, min, max):
+    def _bound_count(self, min, max):
         return 1 if min <= 1 and 1 < max else 0
 
     def _list(self, n):
@@ -128,7 +128,7 @@ class EpsilonRule(ConstantRule):
     def _count(self, i):
         return 1 if i == 0 else 0
 
-    def _bound(self, min, max):
+    def _bound_count(self, min, max):
         return 1 if min <= 0 and 0 < max else 0
 
     def _list(self, n):
@@ -162,11 +162,11 @@ class UnionRule(ConstructorRule):
         count_snd = 0 if i < val_snd else self._grammar[self._snd].count(i)
         return count_fst + count_snd
 
-    def _bound(self, min, max):
+    def _bound_count(self, min, max):
         val_fst = self._grammar[self._fst].valuation
         val_snd = self._grammar[self._snd].valuation
-        count_fst = 0 if max < val_fst else self._grammar[self._fst].bound(min, max)
-        count_snd = 0 if max < val_snd else self._grammar[self._snd].bound(min, max)
+        count_fst = 0 if max < val_fst else self._grammar[self._fst].bound_count(min, max)
+        count_snd = 0 if max < val_snd else self._grammar[self._snd].bound_count(min, max)
         return count_fst + count_snd
 
     def _list(self, n):
@@ -225,7 +225,7 @@ class ProductRule(ConstructorRule):
                 count_total += count_fst * count_snd
         return count_total
 
-    def _bound(self, min, max):
+    def _bound_count(self, min, max):
         val_fst = self._grammar[self._fst].valuation
         val_snd = self._grammar[self._snd].valuation
         count_total = 0
