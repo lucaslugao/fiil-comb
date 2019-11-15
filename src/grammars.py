@@ -3,6 +3,9 @@ from rules import EpsilonRule
 from rules import UnionRule
 from rules import ProductRule
 
+# TODO: Add decomposition functions to TreeGram and FiboGram
+# TODO: Use tree class instead of this string simulation of the class
+
 treeGram = {
     "Tree": UnionRule("Node", "Leaf"),
     "Node": ProductRule("Tree", "Tree", lambda a: "Node({},{})".format(*a)),
@@ -99,7 +102,6 @@ abcPalindromeGram = {
     "CW": ProductRule("C", "W", "".join, lambda obj: (obj[0], obj[1:])),
     "CWC": ProductRule("CW", "C", "".join, lambda obj: (obj[:-1], obj[-1])),
 }
-
 
 abEqualCountGram = {
     "E": EpsilonRule(""),
