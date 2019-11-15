@@ -165,8 +165,12 @@ class UnionRule(ConstructorRule):
     def _bound_count(self, min, max):
         val_fst = self._grammar[self._fst].valuation
         val_snd = self._grammar[self._snd].valuation
-        count_fst = 0 if max < val_fst else self._grammar[self._fst].bound_count(min, max)
-        count_snd = 0 if max < val_snd else self._grammar[self._snd].bound_count(min, max)
+        count_fst = (
+            0 if max < val_fst else self._grammar[self._fst].bound_count(min, max)
+        )
+        count_snd = (
+            0 if max < val_snd else self._grammar[self._snd].bound_count(min, max)
+        )
         return count_fst + count_snd
 
     def _list(self, n):
@@ -218,10 +222,10 @@ class ProductRule(ConstructorRule):
         val_snd = self._grammar[self._snd].valuation
         count_total = 0
         for k in range(i + 1):
-            l = i - k
-            if k >= val_fst and l >= val_snd:
+            j = i - k
+            if k >= val_fst and j >= val_snd:
                 count_fst = self._grammar[self._fst].count(k)
-                count_snd = self._grammar[self._snd].count(l)
+                count_snd = self._grammar[self._snd].count(j)
                 count_total += count_fst * count_snd
         return count_total
 
@@ -247,10 +251,10 @@ class ProductRule(ConstructorRule):
         val_snd = self._grammar[self._snd].valuation
         list_total = []
         for k in range(n + 1):
-            l = n - k
-            if k >= val_fst and l >= val_snd:
+            j = n - k
+            if k >= val_fst and j >= val_snd:
                 list_fst = self._grammar[self._fst].list(k)
-                list_snd = self._grammar[self._snd].list(l)
+                list_snd = self._grammar[self._snd].list(j)
                 for obj_fst in list_fst:
                     for obj_snd in list_snd:
                         list_total += [self._cons([obj_fst, obj_snd])]
@@ -260,13 +264,13 @@ class ProductRule(ConstructorRule):
         val_fst = self._grammar[self._fst].valuation
         val_snd = self._grammar[self._snd].valuation
         for k in range(n + 1):
-            l = n - k
-            if k >= val_fst and l >= val_snd:
+            j = n - k
+            if k >= val_fst and j >= val_snd:
                 count_fst = self._grammar[self._fst].count(k)
-                count_snd = self._grammar[self._snd].count(l)
+                count_snd = self._grammar[self._snd].count(j)
                 if m < count_snd * count_fst:
                     obj_fst = self._grammar[self._fst].unrank(k, m // count_snd)
-                    obj_snd = self._grammar[self._snd].unrank(l, m % count_snd)
+                    obj_snd = self._grammar[self._snd].unrank(j, m % count_snd)
                     return self._cons([obj_fst, obj_snd])
                 else:
                     m -= count_snd * count_fst
@@ -278,10 +282,10 @@ class ProductRule(ConstructorRule):
         val_snd = self._grammar[self._snd].valuation
         rank = 0
         for k in range(len(obj_fst)):
-            l = len(obj) - k
-            if k >= val_fst and l >= val_snd:
+            j = len(obj) - k
+            if k >= val_fst and j >= val_snd:
                 count_fst = self._grammar[self._fst].count(k)
-                count_snd = self._grammar[self._snd].count(l)
+                count_snd = self._grammar[self._snd].count(j)
                 rank += count_fst * count_snd
         rank_fst = self._grammar[self._fst].rank(obj_fst,)
         rank_snd = self._grammar[self._snd].rank(obj_snd,)

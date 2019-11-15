@@ -1,4 +1,4 @@
-from rules import *
+from rules import init_grammar
 import grammars
 from importlib import reload
 
@@ -15,7 +15,6 @@ def init_grammar_verbose(grammar):
 
     add_to_output("n", *grammar.keys())
     add_to_output("-", *["-" for _ in grammar.keys()])
-    valuations = {rule_name: rule.valuation for rule_name, rule in grammar.items()}
 
     def print_valuations(n):
         nonlocal grammar, add_to_output
@@ -92,7 +91,6 @@ def q9():
                     ]
                 )
             )
-
 
 
 def print_grammar(grammar):
