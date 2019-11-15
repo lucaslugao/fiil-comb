@@ -119,6 +119,7 @@ abEqualCountGram = {
     "bb": ProductRule("b", "b", "".join, lambda obj: split_on_acc(obj, "B", 1)),
 }
 
+# FIXME: Remove this weird export thing
 grammars = {
     grammar_name: grammar
     for grammar_name, grammar in globals().items()
