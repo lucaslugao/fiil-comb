@@ -130,7 +130,7 @@ class ConstructorRule(AbstractRule):
         super(ConstructorRule, self).__init__()
         assert type(fst) == str
         assert type(snd) == str
-        assert callable(dec)
+        assert dec is None or callable(dec)
         self._fst = fst
         self._snd = snd
         self._dec = dec
