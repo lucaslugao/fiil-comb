@@ -366,7 +366,7 @@ def check_grammar(grammar):
     Check if the grammar only contains references to defined rules
 
     Args:
-        dict: grammar
+        grammar (dict): Grammar to check
 
     Returns:
         bool: Check result
@@ -386,7 +386,9 @@ def check_ambiguity(grammar, root, n_max=6):
     Check if the grammar produces ambiguous (repeated) objects
 
     Args:
-        dict: grammar
+        grammar (dict): Grammar to check
+        root: Grammar root object
+        n_max (int): Max object size to check
 
     Returns:
         bool: Check result
