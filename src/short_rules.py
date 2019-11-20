@@ -38,7 +38,7 @@ class Epsilon:
 
 
 class Union:
-    def __init__(self, fst, snd, dec):
+    def __init__(self, fst, snd, dec=None):
         self._fst = fst
         self._snd = snd
         self._dec = dec
@@ -56,7 +56,7 @@ class Union:
 
 
 class Prod:
-    def __init__(self, fst, snd, cons, dec):
+    def __init__(self, fst, snd, cons, dec=None):
         self._fst = fst
         self._snd = snd
         self._cons = cons
@@ -79,6 +79,23 @@ class Prod:
             + fst_rules
             + snd_rules
         )
+
+
+class Sequence:
+    def __init__(self, nt, empty_obj, cons):
+        self._nt = nt
+        self._empty_obj = empty_obj
+        self._cons = cons
+
+    def _to_std_rules(self, name=None):
+        if name is None:
+            name = get_id()
+        seq_rule = Union(
+            Epsilon(self._empty_obj),
+            Prod(NonTerm(name), self._nt, self._cons),
+            lambda obj: obj == self._empty_obj,
+        )
+        return seq_rule._to_std_rules(name)
 
 
 def to_std_grammar(short_grammar):
