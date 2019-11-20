@@ -21,7 +21,7 @@ def init_grammar_verbose(grammar):
         add_to_output(
             n,
             *[
-                str(rule.valuation) if rule.valuation < float("inf") else "$\infty$"
+                str(rule.valuation) if rule.valuation < float("inf") else "∞"
                 for rule in grammar.values()
             ]
         )
