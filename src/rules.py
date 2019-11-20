@@ -141,7 +141,7 @@ class EpsilonRule(ConstantRule):
 
 
 class UnionRule(ConstructorRule):
-    def __init__(self, fst, snd, dec=lambda: True):
+    def __init__(self, fst, snd, dec=None):
         super(UnionRule, self).__init__(fst, snd, dec)
 
     def __str__(self):
@@ -193,6 +193,8 @@ class UnionRule(ConstructorRule):
             return self._grammar[self._snd].unrank(n, k - count_fst)
 
     def _rank(self, obj):
+        if self._dec is None:
+            raise Exception("decomposition function not defined")
         count = 0 if self._dec(obj) else self._grammar[self._fst].count(len(obj))
         rank = count + self._grammar[self._fst if self._dec(obj) else self._snd].rank(
             obj,
@@ -201,7 +203,7 @@ class UnionRule(ConstructorRule):
 
 
 class ProductRule(ConstructorRule):
-    def __init__(self, fst, snd, cons, dec=lambda x: (True, x)):
+    def __init__(self, fst, snd, cons, dec=None):
         super(ProductRule, self).__init__(fst, snd, dec)
         assert callable(cons)
         self._cons = cons
@@ -277,6 +279,8 @@ class ProductRule(ConstructorRule):
         raise ValueError("Rank greater than count!")
 
     def _rank(self, obj):
+        if self._dec is None:
+            raise Exception("decomposition function not defined")
         obj_fst, obj_snd = self._dec(obj)
         val_fst = self._grammar[self._fst].valuation
         val_snd = self._grammar[self._snd].valuation
