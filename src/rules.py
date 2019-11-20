@@ -13,13 +13,13 @@ class AbstractRule(ABC):
 
     @abstractmethod
     def calc_valuation(self):
-    """
-    Calculate one iteration of the valuation for this rule based on related 
-    rules valuations.
+        """
+        Calculate one iteration of the valuation for this rule based on related 
+        rules valuations.
 
-    Returns:
-        int: Valuation value
-    """
+        Returns:
+            int: Valuation value
+        """
         pass
 
     @abstractmethod
@@ -44,81 +44,81 @@ class AbstractRule(ABC):
 
     @functools.lru_cache(maxsize=None)
     def count(self, i):
-    """
-    Count objects with length i
+        """
+        Count objects with length i
 
-    Args:
-        i (int): Object length
+        Args:
+            i (int): Object length
 
-    Returns:
-        int: Count
-    """
+        Returns:
+            int: Count
+        """
         return self._count(i)
 
     @functools.lru_cache(maxsize=None)
     def bound_count(self, min, max):
-    """
-    Count objects with length in the interval [min, max[
+        """
+        Count objects with length in the interval [min, max[
 
-    Args:
-        min (int): Minimum object length
-        max (int): Maximum object length
+        Args:
+            min (int): Minimum object length
+            max (int): Maximum object length
 
-    Returns:
-        int: Count
-    """
+        Returns:
+            int: Count
+        """
         return self._bound_count(min, max)
 
     @functools.lru_cache(maxsize=None)
     def list(self, n):
-    """
-    List objects with length n
+        """
+        List objects with length n
 
-    Args:
-        n (int): Object length
+        Args:
+            n (int): Object length
 
-    Returns:
-        list: List of objects
-    """
+        Returns:
+            list: List of objects
+        """
         return self._list(n)
 
     @functools.lru_cache(maxsize=None)
     def unrank(self, n, k):
-    """
-    Get the k-th object in the list of objects of size n
+        """
+        Get the k-th object in the list of objects of size n
 
-    Args:
-        n (int): Object size
-        k (int): Object index in the enumeration
+        Args:
+            n (int): Object size
+            k (int): Object index in the enumeration
 
-    Returns:
-        list: Object
-    """
+        Returns:
+            list: Object
+        """
         return self._unrank(n, k)
 
     @functools.lru_cache(maxsize=None)
     def rank(self, obj):
-    """
-    Calculate the position of an object in the enumeration of objects with the size of obj
+        """
+        Calculate the position of an object in the enumeration of objects with the size of obj
 
-    Args:
-        obj: Object
+        Args:
+            obj: Object
 
-    Returns:
-        int: Object rank
-    """
+        Returns:
+            int: Object rank
+        """
         return self._rank(obj)
 
     def random(self, n):
-    """
-    Get a random object of size n
+        """
+        Get a random object of size n
 
-    Args:
-        n (int): Object size
+        Args:
+            n (int): Object size
 
-    Returns:
-        Object
-    """
+        Returns:
+            Object
+        """
         return self.unrank(n, random.randint(0, self.count(n) - 1))
 
     def set_grammar(self, grammar):
