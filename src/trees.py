@@ -1,13 +1,13 @@
 class Node:
     def __init__(self, fst, snd):
-        self._fst = fst
-        self._snd = snd
+        self.fst = fst
+        self.snd = snd
 
     def __str__(self):
-        return "Node({},{})".format(self._fst, self._snd)
+        return "Node({},{})".format(self.fst, self.snd)
 
     def __eq__(self, other):
-        return self._fst == other._fst and self._snd == other._snd
+        return self.fst == other.fst and self.snd == other.snd
 
     def __repr__(self):
         return str(self)
@@ -16,7 +16,7 @@ class Node:
         return hash(str(self))
 
     def __len__(self):
-        return len(self._fst) + len(self._snd)
+        return len(self.fst) + len(self.snd)
 
 
 class Leaf:

@@ -10,7 +10,7 @@ from trees import Node, Leaf
 treeGram = {
     "Tree": UnionRule("Node", "Leaf", (lambda p: isinstance(p, Node))),
     "Node": ProductRule(
-        "Tree", "Tree", (lambda p: Node(p[0], p[1])), (lambda n: (n._fst, n._snd))
+        "Tree", "Tree", (lambda p: Node(p[0], p[1])), (lambda n: (n.fst, n.snd))
     ),
     "Leaf": SingletonRule(Leaf()),
 }
