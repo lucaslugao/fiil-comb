@@ -2,14 +2,11 @@ from rules import SingletonRule
 from rules import EpsilonRule
 from rules import UnionRule
 from rules import ProductRule
-
-n_rules = 0
+from uuid import uuid4
 
 
 def get_id():
-    global n_rules
-    n_rules += 1
-    return "rule{}".format(n_rules)
+    return "rule-{}".format(str(uuid4()).replace("-", ""))
 
 
 class NonTerm:
