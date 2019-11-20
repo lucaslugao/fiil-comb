@@ -1,6 +1,6 @@
 ## FIIL Combinatorics Project
 
-This repository contains the implementation of the combinatorics projects for the Paris-Sud FIIL M2 program.
+This repository contains the implementation of the combinatorics project for the Paris-Sud FIIL M2 program.
 
 ## Authors
 
