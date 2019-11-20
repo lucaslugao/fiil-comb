@@ -405,7 +405,7 @@ def init_grammar(grammar):
     Initialize grammar using the valuation algorithm
 
     Args:
-        dict: grammar
+        grammar (dict): Gramamr to initialize
     """
     assert check_grammar(grammar)
     for rule in grammar.values():
