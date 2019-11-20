@@ -8,5 +8,6 @@ for grammar in grammars.values():
     for rule in grammar.values():
         for n in range(0, N_MAX):
             assert rule.list(n) == [rule.unrank(n, i) for i in range(0, rule.count(n))]
+            assert all([len(el) == n for el in rule.list(n)])
             assert all([rule.rank(obj) == i for i, obj in enumerate(rule.list(n))])
 
