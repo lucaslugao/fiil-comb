@@ -2,25 +2,28 @@ from rules import SingletonRule
 from rules import EpsilonRule
 from rules import UnionRule
 from rules import ProductRule
+from trees import Node, Leaf
 
 # TODO: Add decomposition functions to TreeGram and FiboGram
 # TODO: Use tree class instead of this string simulation of the class
 
 treeGram = {
-    "Tree": UnionRule("Node", "Leaf"),
-    "Node": ProductRule("Tree", "Tree", lambda a: "Node({},{})".format(*a)),
-    "Leaf": SingletonRule("Leaf"),
+    "Tree": UnionRule("Node", "Leaf", (lambda p: isinstance(p, Node))),
+    "Node": ProductRule(
+        "Tree", "Tree", (lambda p: Node(p[0], p[1])), (lambda n: (n.fst, n.snd))
+    ),
+    "Leaf": SingletonRule(Leaf()),
 }
 
 fiboGram = {
-    "Fib": UnionRule("Vide", "Cas1"),
-    "Cas1": UnionRule("CasAu", "Cas2"),
-    "Cas2": UnionRule("AtomB", "CasBAu"),
+    "Fib": UnionRule("Vide", "Cas1", lambda s: s == ""),
+    "Cas1": UnionRule("CasAu", "Cas2", lambda s: len(s) > 0 and s[0] == "A"),
+    "Cas2": UnionRule("AtomB", "CasBAu", lambda s: s == "B"),
     "Vide": EpsilonRule(""),
-    "CasAu": ProductRule("AtomA", "Fib", "".join),
+    "CasAu": ProductRule("AtomA", "Fib", "".join, lambda s: ("A", s[1:])),
     "AtomA": SingletonRule("A"),
     "AtomB": SingletonRule("B"),
-    "CasBAu": ProductRule("AtomB", "CasAu", "".join),
+    "CasBAu": ProductRule("AtomB", "CasAu", "".join, lambda s: ("B", s[1:])),
 }
 
 abGram = {
