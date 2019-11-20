@@ -13,7 +13,6 @@ for grammar in grammars.values():
             assert all([rule.rank(obj) == i for i, obj in enumerate(rule.list(n))])
             try:
                 rule.unrank(n, rule.count(n) + 1)
+                assert False
             except:
-                continue
-            # Not reached if unrank threw exception for index bigger than count.
-            assert False
+                pass
